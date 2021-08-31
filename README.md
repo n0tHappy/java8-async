@@ -1,4 +1,4 @@
-#java8异步编程
+java8异步编程
 
 看了《java8实战》这本数，学习了java8的异步编程的相关知识，自己想了一个业务场景，通过异步编程来实现，记录一下实战过程中遇到的问题。
 
@@ -109,6 +109,7 @@ public ThreadPoolExecutor(int corePoolSize,    // 核心线程数
                           RejectedExecutionHandler handler)  // 拒绝策略
 ```
 上面代码里面有两个Stream,之所以没有合并成一个,是因为Stream的延迟特性会引起顺序执行。书中对此原理的解释图为:
+
 ![java8async-1](https://github.com/n0tHappy/java8-async/blob/main/images/java8async-1.png)
 
 代码里有一点需要注意，当调用syncService.getKeylineByAnswer(Answer answer)方法时报错，提示需要的参数为 Answer, 而提供的是List<Answer>,  这里本来想把 Stream<CompletableFutrue<List<Answer>>> 拍平为Stream<CompletableFuture<Answer>> 的，希望有类似于flatmap的方法，结果没找到，无奈之下只能采取另外一个方案，增加一个方法syncService.getKeylineByAnswer(List<Answer> answers), 方法如下:
