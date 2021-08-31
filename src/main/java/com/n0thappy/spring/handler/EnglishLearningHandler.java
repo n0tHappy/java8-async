@@ -23,7 +23,7 @@ public class EnglishLearningHandler {
 
     public List<String> findEnglishLinesSync(String keyword, int questionsNum) {
         List<Question> questions = syncService.getQuestionsByKeyword(keyword, questionsNum);
-        return questions.parallelStream().map(question -> syncService.getAnswersByQuestion(question))
+        return questions.stream().map(question -> syncService.getAnswersByQuestion(question))
                 .flatMap(List::stream)
                 .map(answer -> syncService.getKeylineByAnswer(answer))
                 .collect(Collectors.toList());
